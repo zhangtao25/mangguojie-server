@@ -4,7 +4,7 @@ let transporter = nodemailer.createTransport({
   port: 465,
   secure: true, // true for 465, false for other ports
   auth: {
-    user: "905019230@qq.com", // 发送方的邮箱
+    user: '905019230@qq.com', // 发送方的邮箱
     pass: 'vxlxqybivuvibdaa' //   pop3 授权码
   }
 });
