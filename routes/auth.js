@@ -34,10 +34,7 @@ router.get('/vcode', (req, res, next) => {
               'user_islive': false
             };
             collection.insertMany([new_reg_users], (err, result) => {
-              res.status(400).send({
-                errid: "8017",
-                msg: "已将未激活的用户存进数据库"
-              });
+              res.send("验证码发送成功！");
             })
           } else {
             res.status(400).send({
@@ -108,7 +105,17 @@ router.post('/login', function (req, res, next) {
           let info = {user_email,user_password}
           let token = jwt.sign(info, user_email, {expiresIn: 60 * 60 * 24});
           res.send(token)
+        } else {
+          res.status(401).send({
+            errid: "401",
+            msg: "账号密码错误"
+          })
         }
+      } else {
+        res.status(401).send({
+          errid: "401",
+          msg: "账号密码错误"
+        })
       }
     })
   });
