@@ -37,7 +37,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req,res,next){
   // 设置不需要验证的路径
   console.log(req.url)
-  if(req.url=='/auth/login'||req.url=='/auth/reg'||req.url.includes('/auth/vcode')||req.url=='/auth/token'){
+  if(
+      req.url.includes('/auth/login')||
+      req.url.includes('/auth/reg')||
+      req.url.includes('/auth/vcode')||
+      req.url.includes('/auth/token')||
+      req.url.includes('/useravatar')
+  ){
     next()
   }else{
     let user_email = req.headers.authorization.split(" ")[0]
