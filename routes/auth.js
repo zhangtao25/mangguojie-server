@@ -14,6 +14,7 @@ const yzm = require('./../common/mail.js');
 router.get('/vcode', (req, res, next) => {
 
   let user_email = req.query.user_email;
+  console.log(user_email)
   MongoClient.connect(url, (err, client) => {
     const db = client.db(dbName);
     const collection = db.collection('User');
