@@ -97,9 +97,18 @@ router.post('/reg', function (req, res, next) {
 router.post('/login', function (req, res, next) {
   let user_email = req.body.user_email;
   let user_password = req.body.user_password;
-  MongoClient.connect(url, (err, client) => {
-    const db = client.db(dbName);
-    const collection = db.collection('User');
+
+  function getCollection(){
+    return new Promise((resolve, reject)=>{
+      MongoClient.connect(url, (err, client) => {
+        const db = client.db(dbName);
+        const collection = db.collection('User');
+        resolve(collection)
+      });
+    })
+  }
+  async function fn(){
+    let collection = await getCollection();
     collection.find({'user_email': user_email}).toArray((err, docs)=>{
       if (docs.length!==0){
         if (docs[0].user_password == user_password){
@@ -119,7 +128,8 @@ router.post('/login', function (req, res, next) {
         })
       }
     })
-  });
+  }
+  fn();
 });
 router.post('/token', function (req, res, next) {
   let user_email = req.body.user_email;

@@ -2,6 +2,8 @@ let express = require('express');
 let router = express.Router();
 let jwt = require('jsonwebtoken');
 let fs = require('fs');
+const multer  = require('multer');
+var upload = multer({ dest: 'uploads/'}) // 文件储存路径
 
 // 引入mongodb包
 const mongodb = require('mongodb');
@@ -47,4 +49,9 @@ router.post('/useravatar', function (req, res, next) {
   }
   saveUserCover(user_email)
 });
+router.post('/write',upload.single('fileUpload1'),function (req, res, next) {
+  console.log(req.file)
+  res.send({'a':'a'})
+})
+
 module.exports = router;
